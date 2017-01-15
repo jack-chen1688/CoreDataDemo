@@ -14,10 +14,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
         let context = appDelegate.persistentContainer.viewContext
-        
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
         newUser.setValue("Bill", forKey: "username")
@@ -34,14 +33,32 @@ class ViewController: UIViewController {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
         
         request.returnsObjectsAsFaults = false
-        
+        //request.predicate = NSPredicate(format: "username = %@", "Tom")
         do {
             let results = try context.fetch(request)
             
             if results.count > 0 {
                 for result in results as! [NSManagedObject] {
                     if let username = result.value(forKey: "username")  as? String {
+                        
                         print("username is", username)
+                        
+//                        context.delete(result)
+//                        do {
+//                            try context.save()
+//                            print("saved")
+//                        } catch  {
+//                            print("not saved")
+//                        }
+                        
+//                        result.setValue("Tom", forKey: "username")
+//
+//                        do {
+//                            try context.save()
+//                            print("saved")
+//                        } catch  {
+//                            print("not saved")
+//                        }
                     }
                 }
             } else {
